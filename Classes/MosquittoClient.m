@@ -39,6 +39,7 @@ static void on_publish(struct mosquitto *mosq, void *obj, int message_id)
 static void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_message *message)
 {
     MosquittoMessage *mosq_msg = [[MosquittoMessage alloc] init];
+    mosq_msg.data = [NSData dataWithBytes:message->payload length:message->payloadlen];
     mosq_msg.topic = [NSString stringWithUTF8String: message->topic];
     mosq_msg.payload = [[[NSString alloc] initWithBytes:message->payload
                                                  length:message->payloadlen

@@ -25,6 +25,7 @@
 @property (readwrite, assign) unsigned short payloadlen;
 @property (readwrite, assign) unsigned short qos;
 @property (readwrite, assign) BOOL retained;
+@property (nonatomic, retain) NSData *data;
 
 -(id)init;
 
