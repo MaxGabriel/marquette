@@ -29,17 +29,17 @@
     unsigned short keepAlive;
     BOOL cleanSession;
     
-    id<MosquittoClientDelegate> delegate;
+    id<MosquittoClientDelegate> __weak delegate;
     NSTimer *timer;
 }
 
-@property (readwrite,retain) NSString *host;
+@property (readwrite,strong) NSString *host;
 @property (readwrite,assign) unsigned short port;
-@property (readwrite,retain) NSString *username;
-@property (readwrite,retain) NSString *password;
+@property (readwrite,strong) NSString *username;
+@property (readwrite,strong) NSString *password;
 @property (readwrite,assign) unsigned short keepAlive;
 @property (readwrite,assign) BOOL cleanSession;
-@property (readwrite,assign) id<MosquittoClientDelegate> delegate;
+@property (readwrite,weak) id<MosquittoClientDelegate> delegate;
 
 + (void) initialize;
 + (NSString*) version;

@@ -17,10 +17,10 @@
 	UIButton *connectButton;
 }
 
-@property (nonatomic, retain) IBOutlet UISwitch *redLedSwitch;
-@property (nonatomic, retain) IBOutlet UISwitch *greenLedSwitch;
-@property (nonatomic, retain) IBOutlet UITextField *hostField;
-@property (nonatomic, retain) IBOutlet UIButton *connectButton;
+@property (nonatomic, strong) IBOutlet UISwitch *redLedSwitch;
+@property (nonatomic, strong) IBOutlet UISwitch *greenLedSwitch;
+@property (nonatomic, strong) IBOutlet UITextField *hostField;
+@property (nonatomic, strong) IBOutlet UIButton *connectButton;
 
 - (IBAction) redLedSwitchAction:(id)sender;
 - (IBAction) greenLedSwitchAction:(id)sender;

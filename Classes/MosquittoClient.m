@@ -20,19 +20,19 @@
 
 static void on_connect(struct mosquitto *mosq, void *obj, int rc)
 {
-    MosquittoClient* client = (MosquittoClient*)obj;
+    MosquittoClient* client = (__bridge MosquittoClient*)obj;
     [[client delegate] didConnect:(NSUInteger)rc];
 }
 
 static void on_disconnect(struct mosquitto *mosq, void *obj, int rc)
 {
-    MosquittoClient* client = (MosquittoClient*)obj;
+    MosquittoClient* client = (__bridge MosquittoClient*)obj;
     [[client delegate] didDisconnect];
 }
 
 static void on_publish(struct mosquitto *mosq, void *obj, int message_id)
 {
-    MosquittoClient* client = (MosquittoClient*)obj;
+    MosquittoClient* client = (__bridge MosquittoClient*)obj;
     [[client delegate] didPublish:(NSUInteger)message_id];
 }
 
@@ -41,26 +41,25 @@ static void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto
     MosquittoMessage *mosq_msg = [[MosquittoMessage alloc] init];
     mosq_msg.data = [NSData dataWithBytes:message->payload length:message->payloadlen];
     mosq_msg.topic = [NSString stringWithUTF8String: message->topic];
-    mosq_msg.payload = [[[NSString alloc] initWithBytes:message->payload
+    mosq_msg.payload = [[NSString alloc] initWithBytes:message->payload
                                                  length:message->payloadlen
-                                               encoding:NSUTF8StringEncoding] autorelease];
-    MosquittoClient* client = (MosquittoClient*)obj;
+                                               encoding:NSUTF8StringEncoding];
+    MosquittoClient* client = (__bridge MosquittoClient*)obj;
     
     //[[client delegate] didReceiveMessage:payload topic:topic];
     [[client delegate] didReceiveMessage:mosq_msg];
-    [mosq_msg release];
 }
 
 static void on_subscribe(struct mosquitto *mosq, void *obj, int message_id, int qos_count, const int *granted_qos)
 {
-    MosquittoClient* client = (MosquittoClient*)obj;
+    MosquittoClient* client = (__bridge MosquittoClient*)obj;
     // FIXME: implement this
     [[client delegate] didSubscribe:message_id grantedQos:nil];
 }
 
 static void on_unsubscribe(struct mosquitto *mosq, void *obj, int message_id)
 {
-    MosquittoClient* client = (MosquittoClient*)obj;
+    MosquittoClient* client = (__bridge MosquittoClient*)obj;
     [[client delegate] didUnsubscribe:message_id];
 }
 
@@ -84,7 +83,7 @@ static void on_unsubscribe(struct mosquitto *mosq, void *obj, int message_id)
         [self setKeepAlive: 60];
         [self setCleanSession: YES]; //NOTE: this isdisable clean to keep the broker remember this client
         
-        mosq = mosquitto_new(cstrClientId, cleanSession, self);
+        mosq = mosquitto_new(cstrClientId, cleanSession, (__bridge void *)(self));
         mosquitto_connect_callback_set(mosq, on_connect);
         mosquitto_disconnect_callback_set(mosq, on_disconnect);
         mosquitto_publish_callback_set(mosq, on_publish);
@@ -196,7 +195,6 @@ static void on_unsubscribe(struct mosquitto *mosq, void *obj, int message_id)
         timer = nil;
     }
     
-    [super dealloc];
 }
 
 // FIXME: how and when to call mosquitto_lib_cleanup() ?

@@ -135,8 +135,5 @@
 - (void) didSubscribe: (NSUInteger)messageId grantedQos:(NSArray*)qos {}
 - (void) didUnsubscribe: (NSUInteger)messageId {}
 
-- (void)dealloc {
-    [super dealloc];
-}
 
 @end

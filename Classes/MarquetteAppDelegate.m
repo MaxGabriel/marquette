@@ -89,13 +89,6 @@
 }
 
 
-- (void)dealloc {
-    [viewController release];
-    [window release];
-	if (mosquittoClient) [mosquittoClient dealloc];
-
-    [super dealloc];
-}
 
 
 @end
