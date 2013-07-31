@@ -7,4 +7,5 @@ Pod::Spec.new do |s|
   s.summary      = 'Objective-C wrapper for libMosquitto, an MQTT client.'
   s.source       =  {:git => 'https://github.com/MaxGabriel/marquette.git', :tag => '0.0.1' }
   s.source_files = 'Classes/Mosquitto*.{h,m}', 'libmosquitto/*.{h,c}'
+  s.requires_arc = true
 end
