@@ -162,6 +162,14 @@ static void on_unsubscribe(struct mosquitto *mosq, void *obj, int message_id)
     
 }
 
+- (void)publishData: (NSData *)payload toTopic:(NSString *)topic withQos:(NSUInteger)qos retain:(BOOL)retain {
+    const char* cstrTopic = [topic cStringUsingEncoding:NSUTF8StringEncoding];
+    const uint8_t* cstrPayload = [payload bytes];
+    size_t cstrlen = [payload length];
+    mosquitto_publish(mosq, NULL, cstrTopic, cstrlen, cstrPayload, qos, retain);
+    
+}
+
 
 
 - (void)subscribe: (NSString *)topic {
